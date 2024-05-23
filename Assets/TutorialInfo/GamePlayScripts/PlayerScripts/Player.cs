@@ -1,23 +1,28 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace TutorialInfo.GamePlayScripts.PlayerScripts
 {
     public class Player
     {
-        
         private int health;
         private int currency;
+
+        private Action RefreshUI;
 
         public Player(int _health, int _currency)
         {
             health = _health;
             currency = _currency;
+            
         }
 
-        public Player(Level currentLevel)
+        public Player(Level currentLevel, Action refreshUI)
         {
             health = currentLevel.playerHealth;
             currency = currentLevel.playerCurrency;
+            RefreshUI = refreshUI;
         }
 
         public int GetPlayerHealth()
@@ -37,15 +42,17 @@ namespace TutorialInfo.GamePlayScripts.PlayerScripts
         }
 
         
-        public bool SpendCurrency(int amount)
+        public bool SpendCurrency(int cost)
         {
-            if (currency - amount < 0)
+            if (currency - cost < 0)
             {
                 //You don't have enough currency
+                Debug.Log("Paran Yok");
                 return false;
             }
             
-            currency -= amount;
+            currency -= cost;
+            RefreshUI();
             return true;
         }
 

@@ -12,11 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a7bab683d2f432f8d5b631529cd73e9, type: 3}
   m_Name: Level 1
   m_EditorClassIdentifier: 
-  playerHealth: 20
-  playerCurrency: 250
+  playerHealth: 10
+  playerCurrency: 1500
   enemyHitAmount: 5
   waveCount: 5
   waveFreaquency: 60
   spawnPositions:
   - {x: 53, y: 0, z: 86}
   - {x: 60, y: 0, z: 0}
+  Waves:
+  - {fileID: 11400000, guid: d0da92fb964dc1945bd7a880252ed1c4, type: 2}
+  - {fileID: 11400000, guid: 15db083a4b2a4754ea8b1556fb4e611f, type: 2}
+  - {fileID: 11400000, guid: d6ed91acb713b804b86cc66f4ef7ce43, type: 2}
+  - {fileID: 11400000, guid: 263569d7088d8964187ede3ffb8b5173, type: 2}

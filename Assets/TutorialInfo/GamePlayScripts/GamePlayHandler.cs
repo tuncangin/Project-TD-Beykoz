@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using TutorialInfo.GamePlayScripts.PlayerScripts;
+using TutorialInfo.GamePlayScripts.UI;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace TutorialInfo.GamePlayScripts
@@ -18,6 +20,12 @@ namespace TutorialInfo.GamePlayScripts
         //Spawner listesi, sonradan yönetilmek için liste olarak saklanacak
         private List<EnemySpawner> enemySpawners = new List<EnemySpawner>();
         
+        //HUD Referansı
+        [SerializeField] private HudHandler _hudHandler;
+        
+        //Tower Base listesi
+        [SerializeField] private List<TowerBuilderBase> _towerBuilderBases;
+        
         
         public List<Level> Levels;
 
@@ -30,7 +38,16 @@ namespace TutorialInfo.GamePlayScripts
         }
         private void CreateLevel()
         {
-            myPlayer = new Player(currentLevel);
+            myPlayer = new Player(currentLevel, _hudHandler.RefreshUIPlayerStats);
+            
+            //HUD Operasyonları
+            _hudHandler.Init(myPlayer);
+            
+            //TowerBuilderBase Operasyonları
+            foreach (TowerBuilderBase towerBuilder in _towerBuilderBases)
+            {
+                towerBuilder.Init(_hudHandler);
+            }
 
             //Foreach loop içine verdiğimiz listenin boyutu, listenin elemanları arasında loop atar
             foreach (Vector3 spawnPosition in currentLevel.spawnPositions)
