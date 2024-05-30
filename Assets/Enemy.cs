@@ -1,15 +1,29 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using DG.Tweening;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AgentFollower : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
     private NavMeshAgent myAgent;
     public Transform objectToFollow;
-    
+
+    public int Health = 100;
+
+    public void GetDamage(int DamageAmount)
+    {
+        Health -= DamageAmount;
+        
+        if (Health <= 0)
+        {
+           KillMe();
+           Debug.Log("Enemy Died");
+        }
+    }
+
+    private void KillMe()
+    {
+        //Pool varsa pool a dön
+        Destroy(gameObject);
+    }
     
     private void Start()
     {

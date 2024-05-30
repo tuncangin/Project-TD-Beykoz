@@ -6,6 +6,7 @@ using UnityEngine;
 public class TowerBuilderBase : MonoBehaviour
 {
     [SerializeField]private TowerAsset archerTowerAsset,mageTowerAsset,mortarTowerAsset;
+    [SerializeField] private PoolHandler _poolHandler;
 
     private Dictionary<TowerType, TowerAsset> _towerDictionary = new Dictionary<TowerType, TowerAsset>();
     private HudHandler _hudHandler;
@@ -21,6 +22,17 @@ public class TowerBuilderBase : MonoBehaviour
     
     private void OnMouseDown()
     {
+        if (_hudHandler.GetTemproryMouseObject() == null)
+        {
+            return;
+        }
+        
+        CreateTower(_poolHandler);
+        
+    }
+
+    private void CreateTower(PoolHandler poolHandler)
+    {
         TowerType towerType= _hudHandler.GetTemproryMouseObject()._towerType;
         int towerCost = _towerDictionary[towerType].Cost;
 
@@ -29,12 +41,13 @@ public class TowerBuilderBase : MonoBehaviour
         {
             GameObject towerObject = Instantiate(_towerDictionary[towerType].towerGameobject, transform.position,
                 Quaternion.identity);
-        }
-    }
 
-    private void CreateTower()
-    {
-        
+            if (towerType == TowerType.Archer)
+            {
+                towerObject.GetComponent<ArcherTower>().Init(_poolHandler);
+            }
+            
+        }
     }
 
     
